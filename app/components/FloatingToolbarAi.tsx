@@ -37,12 +37,8 @@ import { ContinueIcon } from "../icons/ContinueIcon";
 import { optionsGroups } from "../prompts";
 import { CopyIcon } from "../icons/CopyIcon";
 import { motion } from "framer-motion";
-import {
-  aiModel as getSelectedAgent,
-  availableAiModels,
-  setSelectedAgent,
-} from "../config";
-import type { OpenAIChatModelId } from "@ai-sdk/openai/internal/dist"; // For typing
+// Removed config imports for agent selection
+// Removed OpenAIChatModelId import
 
 export function FloatingToolbarAi({
   state,
@@ -56,7 +52,7 @@ export function FloatingToolbarAi({
   const [editor] = useLexicalComposerContext();
   const { textContent } = useSelection();
   const [input, setInput] = useState("");
-  const [currentModelInToolbar, setCurrentModelInToolbar] = useState<OpenAIChatModelId>(getSelectedAgent());
+  // Removed currentModelInToolbar state
 
   // Current state of components and
   const [aiState, setAiState] = useState<"initial" | "loading" | "complete">(
@@ -161,26 +157,7 @@ ${textContent || ""}
           editor.dispatchCommand(RESTORE_SELECTION_COMMAND, null)
         }
       >
-        <div className="p-2 border-b border-gray-300">
-          <label htmlFor="ai-model-select" className="sr-only">Select AI Model</label>
-          <select
-            id="ai-model-select"
-            value={currentModelInToolbar}
-            onChange={(e) => {
-              const newModel = e.target.value as OpenAIChatModelId;
-              setSelectedAgent(newModel);
-              setCurrentModelInToolbar(newModel);
-              editor.dispatchCommand(SAVE_SELECTION_COMMAND, null); // Preserve selection during UI interaction
-            }}
-            className="block w-full p-1.5 text-sm border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white hover:bg-gray-50"
-          >
-            {availableAiModels.map((model) => (
-              <option key={model} value={model}>
-                {model}
-              </option>
-            ))}
-          </select>
-        </div>
+        {/* Removed AI model selection dropdown */}
         {lastAiMessage ? (
           // If the AI has streamed in content, show it
           <motion.div
